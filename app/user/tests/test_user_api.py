@@ -35,7 +35,6 @@ class PublicUserApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         user = get_user_model().objects.get(email=payload['email'])
-        print(f'+++++++++++++++++++ {user.check_password(payload["password"])}')
         self.assertTrue(user.check_password(payload['password']))
         self.assertNotIn('password', res.data)
 
@@ -82,7 +81,7 @@ class PublicUserApiTests(TestCase):
         self.assertIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
 
-    def test_create_token_bad_credential(self):
+    def test_create_token_bad_credentials(self):
         """Test returns error if credentials invalid"""
         create_user(email='test@example.com', password='goodpass')
 
@@ -130,6 +129,7 @@ class PrivateUserApiTests(TestCase):
         })
 
     def test_post_me_not_allowed(self):
+        """Test POST is not allowed for the me endpoint."""
         res = self.client.post(ME_URL, {})
 
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
