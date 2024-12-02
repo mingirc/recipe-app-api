@@ -8,7 +8,7 @@ from django.urls import reverse
 from django.test import Client
 
 class AdminSiteTests(TestCase):
-    """Tests for Django setup."""
+    """Tests for Django admin."""
 
     def setUp(self):
         """Create user and client"""
